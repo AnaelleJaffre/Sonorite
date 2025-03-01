@@ -3,20 +3,57 @@
 <html lang="fr">
 
     <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sonorite</title>
+        <link rel="stylesheet" href="style.css">
+        <script defer src="script.js"></script>
     </head>
 
     <body>
 
         <p>Bonjour.</p>
+        <img id="image" src="Images/jeff.png" alt="Jeff">
+        <p>Voici Jeff. Ah, et d'ailleurs, Jeff, c'est vous.</p>
 
-        <img src="">
+        <!-- Question 1 -->
+        <div id="question1">
+            <p>Bonjour, Jeff ! Vous allez bien ?</p>
+            <button data-reponse="cestNul" data-next="#question2">Oui</button>
+            <button data-reponse="moiNonPlus" data-next="#question3">Non</button>
+            <p class="message">...</p>
+        </div>
 
+        <!-- Question 2 (ajout de spacer pour plus d'espace) -->
+        <div id="question2" class="spacer">
+            <p>Oh, c'est dommage ! Où voulez-vous aller ?</p>
+            <button data-reponse="foret" data-next="#fin1">Dans la forêt</button>
+            <button data-reponse="ville" data-next="#fin2">En ville</button>
+            <p class="message">...</p>
+        </div>
+
+        <!-- Question 3 -->
+        <div id="question3" class="spacer">
+            <p>Moi non plus, mais on continue !</p>
+            <button data-reponse="ouiContinuer" data-next="#question2">Oui</button>
+            <button data-reponse="nonStop" data-next="#fin3">Non, j’arrête</button>
+            <p class="message">...</p>
+        </div>
+
+        <!-- Fin 1 -->
+        <div id="fin1" class="spacer">
+            <p>Vous êtes perdu dans la forêt... Fin tragique.</p>
+        </div>
+
+        <!-- Fin 2 -->
+        <div id="fin2" class="spacer">
+            <p>Vous avez trouvé une nouvelle vie en ville !</p>
+        </div>
+
+        <!-- Fin 3 -->
+        <div id="fin3" class="spacer">
+            <p>Vous décidez d’arrêter l'aventure ici. Merci !</p>
+        </div>
 
     </body>
-
-
-
 </html>

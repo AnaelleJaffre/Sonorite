@@ -13,6 +13,29 @@ html {
 
     body {
         font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+
+        /* Cheat code */
+        .hidden {
+            display: none;
+        }
+        
+        /* Style général pour les questions et réponses */
+        div {
+            margin-bottom: 2vw; /* Marge entre chaque question par défaut */
+        }
+
+        /* Modificateur de marge dynamique pour ajuster l’espace */
+        .spacer {
+            margin-top: 150vh; /* Espace supplémentaire pour séparer les questions */
+        }
+
+        /* Optionnel : Style des messages pour les réponses */
+        .message {
+            margin-top: 2vh;
+            color: #333;
+        }
+
     }
 }
 
