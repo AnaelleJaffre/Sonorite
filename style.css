@@ -1,0 +1,26 @@
+@font-face {
+    font-family: Nunito;
+    src: url(Ressources/Fonts/Nunito/Nunito-VariableFont_wght.ttf);
+}
+
+:root {
+    --fond: rgb(4,4,4)
+}
+
+html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    body {
+        font-family: 'Courier New', Courier, monospace;
+    }
+}
+
+
+@keyframes tremble {
+    0% {transform: translate(0, 0);}
+    20% {transform: translate(0, 2px);}
+    50% {transform: translate(2px, 0);}   
+    70% {transform: translate(0, 4px);}   
+    100% {transform: translate(-4px, 0);}   
+}
