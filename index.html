@@ -13,23 +13,65 @@
 
     <body>
 
-        <p>Bonjour.</p>
-        <img id="image" src="Images/jeff.png" alt="Jeff">
-        <p>Voici Jeff. Jeff, c'est vous.</p>
-        <p>Bonjour, Jeff ! Vous allez bien ?</p>
-        <button class="dirtyButton" data-reponse="cestNul">Oui</button>
-        <button class="basicButton" data-reponse="moiNonPlus">Non</button>
-        <p class="message">...</p>
-        
-        <p>HMMMMMMM.</p>
-        <p>Ok Jeff, vous aimez les poulpes ?</p>
-        <button class="deformedButton" data-next="#vousAimezPoulpes">Oui</button>
-        <button class="basicButton" data-next="#vousAimezPasPoulpes">Non</button>
+        <div>
+            <p>Bonjour.</p>
+            <img id="image" src="Images/jeff.png" alt="Jeff">
+            <p>Voici Jeff. Jeff, c'est vous.</p>
+            <p>Bonjour, Jeff ! Vous allez bien ?</p>
+            <button class="dirtyButton" data-reponse="cestNul">Oui</button>
+            <button class="basicButton" data-reponse="moiNonPlus">Non</button>
+            <p class="message">...</p>
+            
+            <p>HMMMMMMM.</p>
+            <p>Ok Jeff, vous aimez les poulpes ?</p>
+            <button class="deformedButton" data-next="#vousAimezPoulpes">Oui</button>
+            <button class="basicButton" data-next="#vousAimezPasPoulpes">Non</button>
+        </div>
+
+        <div id="terrasserDragon" class="spacer">
+            <p>Vous décidez de terrasser le dragon !!</p>
+        </div>
+
+        <div id="cafe" class="spacer">
+            <p>Vous prenez 2 minutes de votre vie pour vous faire un café.</p>
+
+            <img src="Images/jeff_cafe.png">
+
+            <p>AAAAAAH.</p>
+            <p>Vous repensez, sensiblement, au temps qui passe, puis à <a href="https://www.google.fr/search?q=the+answer+to+life+the+universe+and+everything&sca_esv=a8822ba01c419370&sxsrf=AHTn8zr2n5AVM25JdeDcfyQfI363S6AXLw%3A1740933047108&source=hp&ei=t4fEZ96IA9yqkdUPzd-_kAI&iflsig=ACkRmUkAAAAAZ8SVx88kXmKwKC1QJ4G9tSygqbVm_IT7&ved=0ahUKEwiewOP-6OuLAxVcVaQEHc3vDyIQ4dUDCBo&uact=5&oq=the+answer+to+life+the+universe+and+everything&gs_lp=Egdnd3Mtd2l6Ii50aGUgYW5zd2VyIHRvIGxpZmUgdGhlIHVuaXZlcnNlIGFuZCBldmVyeXRoaW5nMgUQABiABDIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHkiRCFAAWABwAHgAkAEAmAF_oAF_qgEDMC4xuAEDyAEA-AEC-AEBmAIBoAKSAZgDAJIHAzAuMaAHqQg&sclient=gws-wiz" target="_blank">la Vie, l'Univers et Tout le reste</a>.</p>
+            <p>Qu'étiez-vous en train de faire, déjà ?</p>
+
+            <button class="mediumButton" data-next="#faireSesValises">Vos valises</button>
+            <!-- <button class="basicButton" data-next="#vousVousPromenez">Rien</button> -->
+        </div>
         
         <div id="vousAimezPoulpes" class="spacer">
             <p>Oh, c'est dommage 😠 ! Parce que moi non ! C'est gluant, comme les huîtres !</p>
             <p>Alors, vous voulez quand-même <a href="#vousVousPromenez">continuer</a> ou <a href="#arreterAventure">pas</a> ?</p>
             <p>Attention, il n'y aura peut-être pas de <a href="https://www.poulpeo.com/reductions-womanizer.htm?mId=68037" target="_blank">poulpes</a> dans cette histoire !!</p>
+        </div>
+
+        <div id="fuirDragon" class="spacer">
+            <p>Vite, fuyez la ville ! Sinon, vous ne ferez pas long feu.</p>
+
+            <div class="dialogue">
+                <p>"Ok Bret, merci pour l'info !!</p>
+                <p>- Pas de quoi..."</p>
+            </div>
+
+            <p>D'un pas pressé, vous vous dirigez vers votre demeure. Comment font tous ces gens pour faire leur marché en toute innocence ?</p>
+            <p>Ils doivent bien être au courant que la ville a été attaquée ! C'est sûrement partout dans les news...</p>
+            <p>Tout en transpirant sous le soleil, vous mettez en marche vos petits neurones. Bret vous a parlé d'un dragon, mais...</p>
+            <p>Vous faites vraiment confiance à Bret ?</p>
+            <button class="dirtyButton" data-reponse="confianceBret">Oui</button>
+            <button class="basicButton" data-reponse="pasConfianceBret">Non ?</button>
+            <p class="message">...</p>
+
+            <p>Ne soupçonneriez-vous pas que Bret vous ait raconté des salades ?</p>
+            
+            <button class="basicButton" data-next="#souconnerBret">Oui.</button>
+            <button class="longButton" data-next="#rentrerPourFuir">Non, l'heure est grave !</button>
+
         </div>
         
         <div id="vousVousPromenez" class="spacer">
@@ -52,25 +94,91 @@
             <p>Quand soudain, vous croisez Bret, votre collègue de travail !!</p>
 
             <img src="Images/bret.png">
-
+            
             <p>Sacrebleu, il a toujours sa vieille cravate bleue.</p>
             <p>Il l'avait hier soir, aussi.</p>
             <p>Il ne s'est pas changé entre temps ?</p>
-
+            
             <div class="dialogue">
                 <p>"Eh, Bret ! Qu'est-ce que tu fais là ?</p>
                 <p>- C'est plutôt à moi de te demander ça, Jeff. Pourquoi t'es au marché à cette heure là ?</p>
                 <p><span id="justificationJourMarche"></span></p>
                 <p>- Ah ouai."</p>
             </div>
-
+            
             <p>Vous le regardez.</p>
             <p>Il vous regarde.</p>
             
+            <div class="dialogue">
+                <p>"Et du coup, toi, tu fais quoi par là ?</p>
+                <p>- Oh, moiii ! Moi, je me rends chez mon assurance.</p>
+                <p>- Ah bon ? Pourquoi ça ?</p>
+                <p>- Eh bien, hier soir, alors que nous étions en train de savourer notre petit cidre au pastis chez Gilberta, un dragon a terrassé une partie de la ville... Ma maison s'est faite amochée. Je vais voir ce que je peux faire avec mon assureur."</p>
+            </div>
+            
+            <p>Vous devenez tout pâle.</p>
+            <p>QUE DIS-JE, TOUT PÂLE ! Vous êtes déjà transparent, vous êtes un bonhomme bâton...</p>
+            <button class="longButton" data-reponse="pointDeVue">Et fier d'être si bien dessiné.</button>
+            <button class="deformedButton" data-reponse="certes">Certes.</button>
+            <p class="message">...</p>
+            
+            <p>Revenons-en à la situation actuelle. Un dragon a quand-même détruit une partie de la ville !</p>
+            <p>Que décidez-vous de faire ?</p>
+            
+            <button class="semiLongButton" data-next="#terrasserDragon">Le terrasser !</button>
+            <button class="basicButton" data-next="#fuirDragon">Fuir !</button>
+        </div>
+
+        <div id="faireSesValises" class="spacer">
+            <p>Vous commencez à faire vos valises, hâtivement.</p>
+            <p>C'est pas possible, ça ! Comment peut-on rester les bras croisés alors qu'une terreur si grande menace la ville ?</p>
+            <p>Franchement...</p>
+
+            <img src="Images/jeff_fait_sa_valise.png">
+
+
+
+        </div>
+
+        <div id="souconnerBret" class="spacer">
+            <p>Ouai. Bret est sympa, mais il est un peu con.</p>
+            <p>Suspicieux, vous scrollez parmi les images de votre téléphone.</p>
+
+            <img src="Images/gallerie_photo.png">
+
+            <p>Vous possédez un certain pactole de photos compromettantes de Bret...</p>
+            <p>Là, c'est là fois où il se prenait pour Rimbaud à Paris. Il disait à tous les passants qu'il était super connu.</p>
+            <img src="Images/bret_a_paris.png">
+
+            <p>Ici, c'est la fois où vous attendiez un avion à l'aéroport. Vous deviez aller en Chine pour le travail, et Bret s'amusait avec les panneaux sur le parking...</p>
+            <img src="Images/bret_dans_un_parking.png">
+
+            <p>Ah, là c'est quand vous êtes allés voir DJ Snake à l'Arena avec Bret.</p>
+            <p>Il n'a pas arrêté de vous crier dans les oreilles.</p>
+            <img src="Images/bret_en_soiree.png">
+
+            <p>Là, c'est la fois où Bret avait invité toute l'équipe chez lui pour fêter sa promotion.</p>
+            <p>Il avait un peu trop bu, comme d'habitude.</p>
+            <p>Le patron l'a dépromu le lendemain...</p>
+            <img src="Images/bret_apres_soiree.png">
+            
+            <p>Vous soupirez. Est-ce que vous voulez appeler Bret pour lui demander de clarifier la situation ?</p>
+
+            <button class="deformedButton" data-next="#appelerBret">Oui</button>
+            <button class="basicButton" data-next="#nePasAppelerBret">Non</button>
         </div>
         
         <div id="arreterAventure" class="spacer">
             <p>Vous décidez d’arrêter l'aventure ici. Une décision fatale !</p>
+        </div>
+
+        <div id="rentrerPourFuir" class="spacer">
+            <p>Après une dizaine de minutes, vous arrivez enfin chez vous. Ouf ! Vous pouvez enfin souffler un peu.</p>
+            <p>Il ne vous reste qu'à faire vos valises et monter en voiture.</p>
+            <p>Vous voulez un café ?</p>
+            
+            <button class="basicButton" data-next="#cafe">Oui</button>
+            <button class="deformedButton" data-next="#faireSesValises">Non</button>
         </div>
         
         <div id="vousAimezPasPoulpes" class="spacer">
