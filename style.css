@@ -1,5 +1,7 @@
 :root {
-    --fond: rgb(4,4,4)
+    --background-color: rgb(255, 255, 255);
+    --text-color: black;
+    --answer-color: rgb(158, 31, 31);
 }
 
 html {
@@ -9,23 +11,81 @@ html {
     body {
         font-family: 'Courier New', Courier, monospace;
         text-align: center;
+        background-color: var(--background-color);
+
+        img {
+            width: 20vw;
+        }
 
         /* Cheat code */
-        .hidden {
-            display: none;
+        a {
+            color: var(--text-color);
+            text-decoration: none;
         }
 
         /* Modificateur de marge dynamique pour ajuster l’espace */
         .spacer {
             margin-top: 100vh; 
-            margin-bottom: 50vh; 
+            margin-bottom: 50vh;
+            padding-top: 50px;
         }
 
-        /* Optionnel : Style des messages pour les réponses */
+        /* Style des messages pour les réponses du narrateur */
         .message {
             margin-top: 2vh;
-            color: #333;
+            color: var(--answer-color);
+            font-weight: bold;
+        }
+        
+        /* Style des BOUTOOOOONNNNS :D */
+        button {
+            padding: 2vw;
+            margin: 1vh 1vw;
+            background-size: 100%; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(255, 255, 255, 0);
+            border: none;
+            cursor: pointer; 
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            
+            &:hover {
+                transform: scale(1.15);
+            }
+            
+            &:active{              
+                transform: translate(5px, 2px);
+            }
+        }
+        
+        /* Différents backgrounds pour les BOUTOOOOONNNNS :D */
+        .basicButton {
+            background-image: url('Images/Decor/bouton1.png');
+            &:active {background-image: url('Images/Decor/bouton1_clique.png');}
         }
 
+        .deformedButton {
+            background-image: url('Images/Decor/bouton2.png');
+            &:active {background-image: url('Images/Decor/bouton2_clique.png');}
+        }
+
+        .dirtyButton {
+            background-image: url('Images/Decor/bouton3.png');
+            &:active {background-image: url('Images/Decor/bouton3_clique.png');}
+        }
+
+        /* La sélection de texte */
+        ::selection {
+            background-color: var(--text-color);
+            color: var(--background-color);
+            text-shadow: 2px 1px 1px red;
+        }
+        
+        ::-moz-selection {
+            background-color: var(--text-color);
+            color: var(--background-color);
+            text-shadow: 2px 1px 1px red;
+        }
     }
 }
