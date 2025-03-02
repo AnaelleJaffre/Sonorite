@@ -2,10 +2,10 @@
 const reponses = {
     "cestNul": "C'est nul...",
     "moiNonPlus": "Moi non plus...",
-    "foret": "Vous vous dirigez vers la forêt...",
-    "ville": "Vous partez en ville...",
+    "foret": "Soit, c'est chill la forêt. Mais attention, des monstres pourraient vous dévorer. C'est bien connu.",
+    "ville": "Éviemment, en ville on prend pas trop de risques... C'est sûr que c'est pas là-bas que vous allez subir une attaque zombie !",
     "ouiContinuer": "Bon courage alors !",
-    "nonStop": "Dommage, peut-être une autre fois."
+    "dommageAutreFois": "Dommage, peut-être une autre fois."
 };
 
 // Fonction pour gérer les choix et avancer dans l'histoire
@@ -15,19 +15,16 @@ function afficherMessage(event) {
     const nextQuestionId = bouton.getAttribute("data-next");
     const message = bouton.parentElement.querySelector(".message");
 
-    // Afficher la réponse associée
+    // Afficher la réponse associée du narrateur
     if (reponseId && message) {
-        message.textContent = reponses[reponseId] || "Réponse inconnue";
+        message.textContent = reponses[reponseId] || "(le narrateur n'a actuellement pas envie de vous répondre.)";
         message.style.display = "block";
     }
 
-    // Ajouter une classe spacer pour plus de marge si nécessaire
+    // Gérer la navigation et le scroll automatique vers la prochaine section
     if (nextQuestionId) {
         const nextQuestion = document.querySelector(nextQuestionId);
         if (nextQuestion) {
-            // Ajouter un espace supplémentaire avec la classe "spacer"
-            nextQuestion.classList.add("spacer");
-
             // Scroll automatique vers la nouvelle section
             nextQuestion.scrollIntoView({ behavior: "smooth" });
         }
