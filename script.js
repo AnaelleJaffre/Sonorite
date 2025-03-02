@@ -13,7 +13,10 @@ const reponses = {
     "pointDeVue": "C'est seulement votre point de vue.",
     "certes": "Certes.",
     "confianceBret": "Oui, vous lui faites confiance ! Après tout, Bret est votre collègue depuis au moins 5 ans déjà.",
-    "pasConfianceBret": "Vous vous arrêtez et plissez les yeux."
+    "pasConfianceBret": "Vous vous arrêtez et plissez les yeux.",
+    "inertie": "Vous êtes une personne vide ?",
+    "interet": "Ah, on est d'accord ! Il y a clairement anguille sous roche.",
+    "rireEncorePlusSeul" : "Vous aimez bien, rire tout seul, pour aucune raison ?"
 };
 
 // Fonction pour gérer les boutons et liens internes
