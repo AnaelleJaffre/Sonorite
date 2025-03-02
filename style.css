@@ -2,6 +2,10 @@
     --background-color: rgb(255, 255, 255);
     --text-color: black;
     --answer-color: rgb(158, 31, 31);
+    --dialogs-color: rgb(73, 94, 98);
+    --dialogs-background: rgb(229, 239, 241);
+
+    --basic-border-radius: 20px;
 }
 
 html {
@@ -12,29 +16,44 @@ html {
         font-family: 'Courier New', Courier, monospace;
         text-align: center;
         background-color: var(--background-color);
+        padding: 10vh 20vw;
 
         img {
             width: 20vw;
+            border-radius: var(--basic-border-radius);
+            margin: 2vw;
         }
-
+        
         /* Cheat code */
         a {
             color: var(--text-color);
             text-decoration: none;
         }
-
+        
         /* Modificateur de marge dynamique pour ajuster l’espace */
         .spacer {
             margin-top: 100vh; 
             margin-bottom: 50vh;
             padding-top: 50px;
         }
-
+        
         /* Style des messages pour les réponses du narrateur */
         .message {
             margin-top: 2vh;
             color: var(--answer-color);
             font-weight: bold;
+        }
+        
+        /* Style des DIALOOOOOGUES */
+        .dialogue {
+            border-radius: var(--basic-border-radius);
+            margin: 6vh auto;
+            padding: 2vh 10vh;
+            width: 60%;
+            font-weight: bold;
+            font-size: large;
+            background-color: var(--dialogs-background);
+            color: var(--dialogs-color);
         }
         
         /* Style des BOUTOOOOONNNNS :D */
@@ -73,6 +92,21 @@ html {
         .dirtyButton {
             background-image: url('Images/Decor/bouton3.png');
             &:active {background-image: url('Images/Decor/bouton3_clique.png');}
+        }
+        
+        .mediumButton {
+            background-image: url('Images/Decor/bouton_moyen.png');
+            &:active {background-image: url('Images/Decor/bouton_moyen_clique.png');}
+        }
+        
+        .semiLongButton {
+            background-image: url('Images/Decor/bouton_semi_long.png');
+            &:active {background-image: url('Images/Decor/bouton_semi_long_clique.png');}
+        }
+
+        .longButton {
+            background-image: url('Images/Decor/bouton_long.png');
+            &:active {background-image: url('Images/Decor/bouton_long_clique.png');}
         }
 
         /* La sélection de texte */

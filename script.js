@@ -6,7 +6,9 @@ const reponses = {
     "foret": "Soit, c'est chill la forêt. Mais attention, des monstres pourraient vous dévorer. C'est bien connu.",
     "ville": "Évidemment, en ville on prend pas trop de risques... C'est sûr que c'est pas là-bas que vous allez subir une attaque zombie !",
     "ouiContinuer": "Bon courage alors !",
-    "dommageAutreFois": "Dommage, peut-être une autre fois."
+    "dommageAutreFois": "Dommage, peut-être une autre fois.",
+    "acheterLimonade": "Pourquoi ??",
+    "rireToutSeul": "D'accord, vous riez tout seul en face du vendeur. Il doit vous prendre pour un fou."
 };
 
 // Fonction pour gérer les boutons et liens internes

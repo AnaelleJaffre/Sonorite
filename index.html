@@ -20,7 +20,7 @@
         <button class="dirtyButton" data-reponse="cestNul">Oui</button>
         <button class="basicButton" data-reponse="moiNonPlus">Non</button>
         <p class="message">...</p>
-
+        
         <p>HMMMMMMM.</p>
         <p>Ok Jeff, vous aimez les poulpes ?</p>
         <button class="deformedButton" data-next="#vousAimezPoulpes">Oui</button>
@@ -31,12 +31,44 @@
             <p>Alors, vous voulez quand-même <a href="#vousVousPromenez">continuer</a> ou <a href="#arreterAventure">pas</a> ?</p>
             <p>Attention, il n'y aura peut-être pas de <a href="https://www.poulpeo.com/reductions-womanizer.htm?mId=68037" target="_blank">poulpes</a> dans cette histoire !!</p>
         </div>
-
+        
         <div id="vousVousPromenez" class="spacer">
             <p>Ok, aujourd'hui c'est <span class="jourActuel"></span>.</p>
             <p>Évidemment, comme tous les jours, vous, vous n'avez rien à faire.</p>
-        </div>
+            <p>Alors, pour tuer le temps, vous faites un tour au marché.</p>
+            
+            <img src="Images/jeff_au_marche.png">
+            
+            <p>Tu-tu-tu...</p>
+            <p>Vous repensez à hier soir. C'était quand-même une soirée sacrément arrosée ! Mélanger le cide et le pastis était, au final, une bonne idée.</p>
+            <p>Nostalgique, vous vous arrêtez devant une échoppe de limonades.</p>
+            
+            <button class="semiLongButton" data-reponse="acheterLimonade">Vous en achetez une.</button>
+            <button class="mediumButton" data-reponse="rireToutSeul">Vous riez.</button>
+            <p class="message">...</p>
+            
+            <p>Bref, vous continuez tranquillement votre chemin...</p>
+            <p> Sous le soleil...</p>
+            <p>Quand soudain, vous croisez Bret, votre collègue de travail !!</p>
 
+            <img src="Images/bret.png">
+
+            <p>Sacrebleu, il a toujours sa vieille cravate bleue.</p>
+            <p>Il l'avait hier soir, aussi.</p>
+            <p>Il ne s'est pas changé entre temps ?</p>
+
+            <div class="dialogue">
+                <p>"Eh, Bret ! Qu'est-ce que tu fais là ?</p>
+                <p>- C'est plutôt à moi de te demander ça, Jeff. Pourquoi t'es au marché à cette heure là ?</p>
+                <p><span id="justificationJourMarche"></span></p>
+                <p>- Ah ouai."</p>
+            </div>
+
+            <p>Vous le regardez.</p>
+            <p>Il vous regarde.</p>
+            
+        </div>
+        
         <div id="arreterAventure" class="spacer">
             <p>Vous décidez d’arrêter l'aventure ici. Une décision fatale !</p>
         </div>
