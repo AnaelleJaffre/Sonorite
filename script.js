@@ -1,37 +1,48 @@
-// Base de données des réponses
+// ----------- Réponses du narrateur et interactions homme-machine ---------------------------------------------
+
 const reponses = {
     "cestNul": "C'est nul...",
     "moiNonPlus": "Moi non plus...",
     "foret": "Soit, c'est chill la forêt. Mais attention, des monstres pourraient vous dévorer. C'est bien connu.",
-    "ville": "Éviemment, en ville on prend pas trop de risques... C'est sûr que c'est pas là-bas que vous allez subir une attaque zombie !",
+    "ville": "Évidemment, en ville on prend pas trop de risques... C'est sûr que c'est pas là-bas que vous allez subir une attaque zombie !",
     "ouiContinuer": "Bon courage alors !",
     "dommageAutreFois": "Dommage, peut-être une autre fois."
 };
 
-// Fonction pour gérer les choix et avancer dans l'histoire
-function afficherMessage(event) {
-    const bouton = event.target;
-    const reponseId = bouton.getAttribute("data-reponse");
-    const nextQuestionId = bouton.getAttribute("data-next");
-    const message = bouton.parentElement.querySelector(".message");
+// Fonction pour gérer les boutons et liens internes
+function gererInteraction(event) {
+    event.preventDefault(); // Empêcher le comportement par défaut
 
-    // Afficher la réponse associée du narrateur
-    if (reponseId && message) {
-        message.textContent = reponses[reponseId] || "(le narrateur n'a actuellement pas envie de vous répondre.)";
-        message.style.display = "block";
+    const element = event.target;
+    const reponseId = element.getAttribute("data-reponse"); // Si l'élément est un bouton pour faire parler le narrateur
+    const nextId = element.getAttribute("data-next") || element.getAttribute("href"); // Si l'élément est un bouton ou un lien qui mène à la suite
+
+    // Afficher la réponse du narrateur si applicable
+    if (reponseId) {
+        const message = element.parentElement.querySelector(".message");
+        if (message) {
+            message.textContent = reponses[reponseId] || "(le narrateur n'a actuellement pas envie de vous répondre.)";
+        }
     }
 
-    // Gérer la navigation et le scroll automatique vers la prochaine section
-    if (nextQuestionId) {
-        const nextQuestion = document.querySelector(nextQuestionId);
-        if (nextQuestion) {
-            // Scroll automatique vers la nouvelle section
-            nextQuestion.scrollIntoView({ behavior: "smooth" });
+    // Effectuer un scroll fluide vers la section suivante si applicable
+    if (nextId && nextId.startsWith("#")) {
+        const nextElement = document.querySelector(nextId);
+        if (nextElement) {
+            nextElement.scrollIntoView({ behavior: "smooth" });
         }
     }
 }
 
-// Ajouter un événement sur tous les boutons
-document.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", afficherMessage);
+// Ajouter l'événement sur tous les boutons et liens internes
+document.querySelectorAll("button, a[href^='#']").forEach(element => {
+    element.addEventListener("click", gererInteraction);
 });
+
+
+
+
+// -------- Afficher le jour actuel ------------------------------------------------------------------------------
+
+// Tableau des jours en français et insertion dans le HTML
+document.querySelector(".jourActuel").textContent = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"][new Date().getDay()];
