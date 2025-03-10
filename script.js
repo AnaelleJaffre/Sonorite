@@ -75,3 +75,23 @@ const justificationJourMarche = document.getElementById("justificationJourMarche
 if (justificationJourMarche) justificationJourMarche.textContent = ["samedi", "dimanche"].includes(jourActuel) 
     ? "- Bah, c'est le week-end, je fais mon marché quoi." 
     : "- Bonne question.";
+
+
+
+
+// -------- Musique d'ascenseur ----------------------------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    const musique = document.getElementById("musique");
+    const boutonMusique = document.getElementById("toggleMusique");
+
+    boutonMusique.addEventListener("click", () => {
+        if (musique.paused) {
+            musique.play().catch(e => console.log("Lecture bloquée :", e));
+            boutonMusique.textContent = "⏸️ Pause";
+        } else {
+            musique.pause();
+            boutonMusique.textContent = "🎵 Musique !";
+        }
+    });
+});
