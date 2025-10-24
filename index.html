@@ -103,8 +103,23 @@
 
             <p>Ne soupçonneriez-vous pas que Bret vous ait raconté des salades ?</p>
             
-            <button class="basicButton" data-next="#souconnerBret">Oui.</button>
+            <button class="basicButton" data-next="#soupconnerBret">Oui.</button>
             <button class="longButton" data-next="#rentrerPourFuir">Non, l'heure est grave !</button>
+
+        </div>
+
+        <div id="allerTuerMonstre" class="spacer">
+            <p>Pris d'un élan de fougue, vous vous dirigez dans la direction indiquée, en prenant votre courage à deux mains. Plus vous vous rapprochez, et plus vous entendez du <a href="https://www.youtube.com/watch?v=ufkWAA5HI5E&pp=ygUFYnJ1aXQ%3D" target="_blank">bruit</a>...</p>
+
+            <p>Vous êtes fort en programmation ?</p>
+            <button class="deformedButton" data-reponse="fortEnProgrammation">Oui</button>
+            <button class="basicButton" data-reponse="nulEnProgrammation">Non ?</button>
+            <p class="message">...</p>
+
+            <p>Hmmmm</p>
+            
+            <button class="basicButton" data-next="#fuireAvecEpee">Fuir avec l'épée</button>
+            <button class="longButton" data-next="#affronterBete">Affronter la bête !</button>
 
         </div>
         
@@ -197,9 +212,10 @@
             
             <img src="Images/jeff_a_lepee.png">
             
-            <p>Vous tombez sur cette gente dame.</p>
-            <button class="mediumButton" data-next="#faireSesValises">Vos valises</button>
-            <!-- <button class="basicButton" data-next="#vousVousPromenez">Rien</button> -->
+            <p>Vous saisissez l'<a href="https://www.youtube.com/watch?v=bALfPuKYlUQ" target="_blank">Épée Magique</a>.</p>
+
+            <button class="mediumButton" data-next="#fuireAvecEpee">Fuyez avec.</button>
+            <button class="semiLongButton" data-next="#allerTuerMonstre">Abattez le monstre !</button>
 
         </div>
         
@@ -225,7 +241,7 @@
 
         </div>
 
-        <div id="souconnerBret" class="spacer">
+        <div id="soupconnerBret" class="spacer">
             <p>Ouai. Bret est sympa, mais il est un peu con.</p>
             <p>Suspicieux, vous scrollez parmi les images de votre téléphone.</p>
 
@@ -248,7 +264,7 @@
             <img src="Images/bret_apres_soiree.png">
             
             <p>Vous soupirez. Est-ce que vous voulez appeler Bret pour lui demander de clarifier la situation ?</p>
-
+            
             <button class="deformedButton" data-next="#appelerBret">Oui</button>
             <button class="basicButton" data-next="#nePasAppelerBret">Non</button>
 
@@ -257,6 +273,32 @@
         
         <div id="arreterAventure" class="spacer">
             <p>Vous décidez d’arrêter l'aventure ici. Une décision fatale !</p>
+        </div>
+
+        <div id="affronterBete" class="spacer">
+            <p>Vous courrez dans les ruelles, et soudainement... !</p>
+
+            <img class="catastrophe" src="Images/poulpe_demoniaque.png">
+            
+            <p>OH NON ! LE POULPE GÉANT !</p>
+            <p>Vous prenez votre courage à deux mains, et foncez dans le tas.</p>
+            
+            <img src="Images/jeff_combattant.png">
+
+            <p>YAAAAA !</p>
+            <p>Et puis, le poulpe vous tape la discut.</p>
+
+            <div class="dialogue">
+                <p>"Yoooo, man, sacrée épée que t'as là !</p>
+                <p>- Euh, yo... Merci...</p>
+                <p>- Tu sais, je détruis la ville parce que je m'ennuie un peu...</p>
+                <p>- Ah...</p>
+                <p>- Tu veux qu'on soit potes ?"</p>
+            </div>
+
+            <button class="basicButton" data-next="#potesAvecPoulpe">Oui</button>
+            <button class="deformedButton" data-next="#pasPoteAvecPoulpe">Non</button>
+            
         </div>
 
         <div id="rentrerPourFuir" class="spacer">

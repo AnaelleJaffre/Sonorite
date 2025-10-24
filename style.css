@@ -55,6 +55,11 @@ html {
             background-color: var(--dialogs-background);
             color: var(--dialogs-color);
         }
+
+        .catastrophe {
+            width: 50vw;
+            animation: shake 1.5s infinite;
+        }
         
         /* Style des BOUTOOOOONNNNS :D */
         button {
@@ -121,5 +126,15 @@ html {
             color: var(--background-color);
             text-shadow: 2px 1px 1px red;
         }
+
     }
+}
+
+/* KEYFRAAAAAMES */
+@keyframes shake {
+    0% { transform: translate(1px, 5px) rotate(0deg); }
+    20% { transform: translate(-5px, -2px) rotate(-5deg); }
+    50% { transform: translate(3px, 4px) rotate(0deg); }
+    70% { transform: translate(8px, 1px) rotate(-5deg); }
+    100% { transform: translate(1px, 5px) rotate(0deg); }
 }

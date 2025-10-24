@@ -24,6 +24,8 @@ const reponses = {
     "plombier" : "Oh moi ! Je suis plombier ! Et toi ?",
     "amour" : "Aaah, tu veux que je te raconte mes histoires d'amour ? Bon alors y'a pas grand-chose par ici hein, c'est un peu platonique... J'ai ressenti de la colère,  de la tristesse mais j'ai fais une dépression en 2019 soit 7 ans après ma rupture avec mon ex copine.  Aujourd'hui ça va mieux mais c'est toujours difficile à passer.   Je me suis remis à la magie car j'adore la prestidigitation.  C'est ce qui m'a sauvé.  De me raccrocher à cette passion pour l'art Magique.   Alors que j'étais seul face à cette rupture  je pouvais en parler à personne parce que mes proches s'en foutaient totalement ( ils avaient raisons  même si je leur ai fait un peu la gueule par la suite en pensant que c'était peut-être insignifiant) bref j'ai aimé cette copine je croyais en elle et au final on se sépare. La semaine passée j'avais abordé une femme au téléphone après en se retrouver dans une cave on a parlé dans au sentiment après elle m'a dit que elle va me donner la réponse j'ai entendu pendant 3 jours mais après elle m'a écrit pour me dire si ont peut rester d'abord amis avant de partir dans une relation amoureuse...",
     "pasDeDragon" : "Ah non, y'a pas de dragon, dans cette ville... Par contre, y'a un poulpe énorme qui détruit la ville depuis hier soir ! Il est vers l'Est !",
+    "fortEnProgrammation": "Ah super ! Vous allez pouvoir coder un programme pour combattre le monstre !",
+    "nulEnProgrammation": "Oh... Peut-être que vous devriez fuir alors !"
 };
 
 // Fonction pour gérer les boutons et liens internes
