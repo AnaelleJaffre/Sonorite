@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Arbre narratif</title>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: "Courier New", monospace;
+        background: #fdfdfd;
+        overflow: hidden;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 20px;
+        background: #e0f0ff;
+        border-bottom: 1px solid #ccc;
+        z-index: 2;
+        position: relative;
+      }
+
+      #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .node {
+        position: absolute;
+        background: white;
+        border: 2px solid #bbb;
+        border-radius: 10px;
+        padding: 8px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: grab;
+        user-select: none;
+        min-width: 100px;
+        text-align: center;
+      }
+
+      .node:hover {
+        border-color: #2196f3;
+        transform: scale(1.05);
+      }
+
+      .node.done {
+        background: #e6f4ea;
+        border-color: #4caf50;
+      }
+
+      .connector {
+        position: absolute;
+        background: #bbb;
+        height: 2px;
+        transform-origin: 0 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Arbre narratif</h1>
+      <label for="fileInput" style="cursor: pointer; font-weight: bold"
+        >📂 Charger un fichier</label
+      >
+      <input type="file" id="fileInput" accept=".html" style="display: none" />
+    </header>
+
+    <div id="canvas"></div>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      let rootNode = null;
+      let offsetX = 0,
+        offsetY = 0,
+        scale = 1;
+      let isPanning = false,
+        startX = 0,
+        startY = 0;
+
+      // ---- Parsing du fichier HTML ----
+      function parseHTMLtoTree(html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const scenes = [...doc.querySelectorAll("div[id]")];
+        const nodes = {};
+
+        scenes.forEach((div) => {
+          nodes[div.id] = { id: div.id, children: [], done: false };
+        });
+
+        scenes.forEach((div) => {
+          const id = div.id;
+          const btns = div.querySelectorAll("button[data-next]");
+          btns.forEach((b) => {
+            const next = b.getAttribute("data-next")?.replace(/^#/, "");
+            if (next && nodes[next]) nodes[id].children.push(nodes[next]);
+          });
+        });
+
+        const allChildren = new Set();
+        Object.values(nodes).forEach((n) =>
+          n.children.forEach((c) => allChildren.add(c.id))
+        );
+        const roots = Object.values(nodes).filter(
+          (n) => !allChildren.has(n.id)
+        );
+        return roots.length === 1
+          ? roots[0]
+          : { id: "START", children: roots, done: false };
+      }
+
+      // ---- Layout de l’arbre ----
+      function layoutTree(node, depth = 0, x = 0) {
+        const nodeWidth = 170,
+          nodeHeight = 100,
+          hMargin = 20,
+          vMargin = 80;
+        let subWidth = 0;
+        (node.children || []).forEach((child) => {
+          const layout = layoutTree(child, depth + 1, x + subWidth);
+          subWidth += layout.width + hMargin;
+        });
+        const ownWidth = Math.max(
+          nodeWidth,
+          subWidth - (node.children.length ? hMargin : 0)
+        );
+        node._x = x + ownWidth / 2;
+        node._y = depth * (nodeHeight + vMargin) + 50;
+        node._width = ownWidth;
+        return { width: ownWidth };
+      }
+
+      // ---- Connecteurs entre les divs ----
+      function connectNodes(from, to) {
+        const x1 = from._x;
+        const y1 = from._y + 30;
+        const x2 = to._x;
+        const y2 = to._y;
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const length = Math.hypot(dx, dy);
+        const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+        const line = document.createElement("div");
+        line.className = "connector";
+        line.style.width = length + "px";
+        line.style.left = x1 + "px";
+        line.style.top = y1 + "px";
+        line.style.transform = `rotate(${angle}deg)`;
+        canvas.appendChild(line);
+      }
+
+      // ---- Dessin de l’arbre ----
+      function drawTree(node) {
+        const div = document.createElement("div");
+        div.className = "node" + (node.done ? " done" : "");
+        div.textContent = node.id;
+        div.style.left = node._x - 60 + "px";
+        div.style.top = node._y + "px";
+        div.addEventListener("click", (e) => {
+          e.stopPropagation();
+          node.done = !node.done;
+          renderTree(rootNode);
+        });
+        canvas.appendChild(div);
+        node._div = div;
+
+        node.children.forEach((child) => {
+          drawTree(child);
+          connectNodes(node, child);
+        });
+      }
+
+      // ---- Rendu complet ----
+      function renderTree(root) {
+        canvas.innerHTML = "";
+        layoutTree(root);
+        drawTree(root);
+        canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
+      }
+
+      // ---- Pan & Zoom ----
+      canvas.addEventListener("mousedown", (e) => {
+        isPanning = true;
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+      window.addEventListener("mouseup", () => (isPanning = false));
+      window.addEventListener("mousemove", (e) => {
+        if (!isPanning) return;
+        offsetX += e.clientX - startX;
+        offsetY += e.clientY - startY;
+        startX = e.clientX;
+        startY = e.clientY;
+        canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
+      });
+      canvas.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.1 : -0.1;
+        scale = Math.min(Math.max(0.3, scale + delta), 2);
+        canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
+      });
+
+      // ---- Chargement fichier ----
+      document
+        .getElementById("fileInput")
+        .addEventListener("change", async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const text = await file.text();
+          rootNode = parseHTMLtoTree(text);
+          renderTree(rootNode);
+        });
+    </script>
+  </body>
+</html>
