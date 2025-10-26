@@ -1,155 +1,223 @@
 <!DOCTYPE html>
+
 <html lang="fr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Arbre narratif</title>
-<link rel="icon" href="Images/icone_arbre.png" />
-<style>
-  html, body { margin:0; height:100%; font-family:monospace; overflow:hidden; }
-  #canvas { position:relative; width:100%; height:100%; background:#fdfdfd; }
-  .node {
-    position:absolute;
-    background:white;
-    border:2px solid #bbb;
-    border-radius:10px;
-    padding:8px 16px;
-    min-width:100px;
-    text-align:center;
-    cursor:grab;
-    z-index:1; /* au-dessus des lignes */
-  }
-  .node:hover { border-color:#2196f3; transform:scale(1.05); }
-  .connector {
-    position:absolute;
-    height:2px;
-    background:#bbb;
-    transform-origin:0 0;
-    z-index:0; /* sous les nodes */
-    pointer-events:none;
-  }
-</style>
-</head>
-<body>
-<div id="canvas"></div>
-<script>
-const canvas = document.getElementById("canvas");
-let rootNode = null;
-let offsetX=0, offsetY=0, scale=1;
-let isPanning=false, startX=0, startY=0;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arbre narratif</title>
+    <link rel="icon" href="Images/icone_arbre.png" />
 
-// ---- Parsing HTML ----
-function parseHTMLtoTree(html){
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html,"text/html");
-  const scenes = [...doc.querySelectorAll("div[id]")];
-  const nodes = {};
-  scenes.forEach(div=>nodes[div.id]={id:div.id, children:[], done:false});
-  scenes.forEach(div=>{
-    div.querySelectorAll("button[data-next]").forEach(b=>{
-      const next = b.getAttribute("data-next")?.replace(/^#/,"");
-      if(next && nodes[next]) nodes[div.id].children.push(nodes[next]);
-    });
-  });
-  const allChildren = new Set();
-  Object.values(nodes).forEach(n=>n.children.forEach(c=>allChildren.add(c.id)));
-  const roots = Object.values(nodes).filter(n=>!allChildren.has(n.id));
-  return roots.length===1 ? roots[0] : {id:"START", children:roots, done:false};
-}
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        font-family: monospace;
+        overflow: hidden;
+      }
 
-// ---- Layout ----
-function layoutTree(node, depth=0, x=0){
-  const nodeWidth=170, nodeHeight=100, hMargin=20, vMargin=80;
-  let subWidth=0;
-  (node.children||[]).forEach(child=>{
-    const layout = layoutTree(child, depth+1, x+subWidth);
-    subWidth += layout.width + hMargin;
-  });
-  const ownWidth = Math.max(nodeWidth, subWidth - (node.children.length ? hMargin : 0));
-  node._x = x + ownWidth/2;
-  node._y = depth*(nodeHeight + vMargin) + 50;
-  node._width = ownWidth;
-  return { width: ownWidth };
-}
+      #canvas {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #fdfdfd;
+      }
 
-// ---- Connecteurs sous node ----
-function connectNodes(from, to){
-  const x1 = from._x;
-  const y1 = from._y + 50; // juste sous le node parent
-  const x2 = to._x;
-  const y2 = to._y - 20; // juste au-dessus du node enfant
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  const length = Math.hypot(dx,dy);
-  const angle = Math.atan2(dy,dx) * 180 / Math.PI;
-  const line = document.createElement("div");
-  line.className = "connector";
-  line.style.width = length + "px";
-  line.style.left = x1 + "px";
-  line.style.top = y1 + "px";
-  line.style.transform = `rotate(${angle}deg)`;
-  canvas.appendChild(line);
-}
+      .node {
+        position: absolute;
+        background: white;
+        border: 2px solid #bbb;
+        border-radius: 10px;
+        padding: 8px 16px;
+        min-width: 100px;
+        text-align: center;
+        cursor: grab;
+        z-index: 1;
+        box-shadow: 2px 2px 7px #bbbbbb50;
+      }
 
-// ---- Draw Tree ----
-function drawTree(node){
-  const div = document.createElement("div");
-  div.className = "node";
-  div.textContent = node.id;
-  div.style.left = node._x - 60 + "px";
-  div.style.top = node._y + "px";
-  div.style.background = "white"; // opaque
-  div.style.zIndex = 1;
-  canvas.appendChild(div);
-  node._div = div;
-  node.children.forEach(child=>{
-    drawTree(child);
-    connectNodes(node, child);
-  });
-}
+      .node:hover {
+        border-color: #2196f3;
+        transform: scale(1.05);
+      }
 
-// ---- Render ----
-function renderTree(root){
-  canvas.innerHTML = "";
-  layoutTree(root);
-  drawTree(root);
-  canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
-}
+      .connector {
+        position: absolute;
+        height: 2px;
+        background: #bbb;
+        transform-origin: 0 0;
+        z-index: 0;
+        pointer-events: none;
+      }
 
-// ---- Load index.html automatiquement ----
-async function loadIndex(){
-  try{
-    const res = await fetch("index.html");
-    const html = await res.text();
-    rootNode = parseHTMLtoTree(html);
-    renderTree(rootNode);
-  }catch(err){
-    console.error("Impossible de charger index.html", err);
-  }
-}
-loadIndex();
+      /* La sélection de texte */
+      ::selection {
+        background-color: rgba(255, 255, 255, 0);
+      }
 
-// ---- Pan & Zoom ----
-canvas.addEventListener("mousedown", e=>{
-  isPanning = true;
-  startX = e.clientX;
-  startY = e.clientY;
-});
-window.addEventListener("mouseup", ()=>isPanning=false);
-window.addEventListener("mousemove", e=>{
-  if(!isPanning) return;
-  offsetX += e.clientX - startX;
-  offsetY += e.clientY - startY;
-  startX = e.clientX;
-  startY = e.clientY;
-  canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
-});
-canvas.addEventListener("wheel", e=>{
-  e.preventDefault();
-  const delta = e.deltaY < 0 ? 0.1 : -0.1;
-  scale = Math.min(Math.max(0.3, scale + delta), 2);
-  canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
-});
-</script>
-</body>
+      ::-moz-selection {
+        background-color: rgba(255, 255, 255, 0);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="canvas"></div>
+    <script>
+      const canvas = document.getElementById("canvas");
+      let rootNode = null;
+      let offsetX = 0,
+        offsetY = 0,
+        scale = 1;
+      let isPanning = false,
+        startX = 0,
+        startY = 0;
+
+      // ---- Parsing HTML ----
+      function parseHTMLtoTree(html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const scenes = [...doc.querySelectorAll("div[id]")];
+        const nodes = {};
+
+        // Création de tous les nodes
+        scenes.forEach(
+          (div) => (nodes[div.id] = { id: div.id, children: [], done: false })
+        );
+
+        scenes.forEach((div) => {
+          // 1) boutons data-next
+          div.querySelectorAll("button[data-next]").forEach((b) => {
+            const next = b.getAttribute("data-next")?.replace(/^#/, "");
+            if (next && nodes[next]) nodes[div.id].children.push(nodes[next]);
+          });
+
+          // 2) liens <a href="#…">
+          div.querySelectorAll("a[href^='#']").forEach((a) => {
+            const next = a.getAttribute("href")?.replace(/^#/, "");
+            if (next && nodes[next]) nodes[div.id].children.push(nodes[next]);
+          });
+        });
+
+        // Détecter le(s) root(s)
+        const allChildren = new Set();
+        Object.values(nodes).forEach((n) =>
+          n.children.forEach((c) => allChildren.add(c.id))
+        );
+        const roots = Object.values(nodes).filter(
+          (n) => !allChildren.has(n.id)
+        );
+        return roots.length === 1
+          ? roots[0]
+          : { id: "Début", children: roots, done: false };
+      }
+
+      // ---- Layout ----
+      function layoutTree(node, depth = 0, x = 0) {
+        const nodeWidth = 170,
+          nodeHeight = 100,
+          hMargin = 20,
+          vMargin = 80;
+        let subWidth = 0;
+        (node.children || []).forEach((child) => {
+          const layout = layoutTree(child, depth + 1, x + subWidth);
+          subWidth += layout.width + hMargin;
+        });
+        const ownWidth = Math.max(
+          nodeWidth,
+          subWidth - (node.children.length ? hMargin : 0)
+        );
+        node._x = x + ownWidth / 2;
+        node._y = depth * (nodeHeight + vMargin) + 50;
+        node._width = ownWidth;
+        return { width: ownWidth };
+      }
+
+      // ---- Connecteurs sous node ----
+      function connectNodes(from, to) {
+        const fromDiv = from._div;
+        const toDiv = to._div;
+        if (!fromDiv || !toDiv) return;
+
+        // position des centres
+        const x1 = from._x; // déjà centré horizontalement
+        const y1 = from._y + fromDiv.offsetHeight / 2;
+        const x2 = to._x;
+        const y2 = to._y + toDiv.offsetHeight / 2;
+
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const length = Math.hypot(dx, dy);
+        const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+        const line = document.createElement("div");
+        line.className = "connector";
+        line.style.width = length + "px";
+        line.style.left = x1 + "px";
+        line.style.top = y1 + "px";
+        line.style.transform = `rotate(${angle}deg) translateY(-1px)`; // p'tit offset pour centrer visuellement
+        canvas.appendChild(line);
+      }
+
+      // ---- Draw Tree ----
+      function drawTree(node) {
+        const div = document.createElement("div");
+        div.className = "node";
+        div.textContent = node.id;
+        div.style.left = node._x - 60 + "px";
+        div.style.top = node._y + "px";
+        div.style.background = "white"; // opaque
+        div.style.zIndex = 1;
+        canvas.appendChild(div);
+        node._div = div;
+        node.children.forEach((child) => {
+          drawTree(child);
+          connectNodes(node, child);
+        });
+      }
+
+      // ---- Render ----
+      function renderTree(root) {
+        canvas.innerHTML = "";
+        layoutTree(root);
+        drawTree(root);
+        canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
+      }
+
+      // ---- Load index.html automatiquement ----
+      async function loadIndex() {
+        try {
+          const res = await fetch("index.html");
+          const html = await res.text();
+          rootNode = parseHTMLtoTree(html);
+          renderTree(rootNode);
+        } catch (err) {
+          console.error("Impossible de charger index.html", err);
+        }
+      }
+      loadIndex();
+
+      // ---- Pan & Zoom ----
+      canvas.addEventListener("mousedown", (e) => {
+        isPanning = true;
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+      window.addEventListener("mouseup", () => (isPanning = false));
+      window.addEventListener("mousemove", (e) => {
+        if (!isPanning) return;
+        offsetX += e.clientX - startX;
+        offsetY += e.clientY - startY;
+        startX = e.clientX;
+        startY = e.clientY;
+        canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
+      });
+      canvas.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.1 : -0.1;
+        scale = Math.min(Math.max(0.3, scale + delta), 2);
+        canvas.style.transform = `translate(${offsetX}px,${offsetY}px) scale(${scale})`;
+      });
+    </script>
+  </body>
 </html>
